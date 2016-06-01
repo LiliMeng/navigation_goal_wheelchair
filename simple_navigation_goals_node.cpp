@@ -38,7 +38,7 @@ readData::readData(string filename)
     {
         for(int j=0; j<numOfDimensions; j++)
         {
-            cout<<"PointID is "<<i<<" "<<j<<"t"<<setprecision(20)<<"value is "<<allDataPointsVec[i][j]<<endl;
+            cout<<"The joystick and VO values "<<i<<" "<<j<<"t"<<setprecision(20)<<"value is "<<allDataPointsVec[i][j]<<endl;
             time.push_back(allDataPointsVec[i][0]);
             fb_joy.push_back(allDataPointsVec[i][1]);
             lr_joy.push_back(allDataPointsVec[i][2]);
@@ -97,9 +97,18 @@ int main(int argc, char** argv){
   ac.waitForResult();
 
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
+  {
+    if(goal.target_pose.pose.position.x>0)
+    {
+        ROS_INFO("Hooray, the base moved [%G] meter forward", (double)goal.target_pose.pose.position.x);
+    }
+    else
+    {
+        ROS_INFO("Hooray, the base moved [%G] meter backward", (double)goal.target_pose.pose.position.x);
+    }
+  }
   else
-    ROS_INFO("The base failed to move forward 1 meter for some reason");
+    ROS_INFO("The base failed to move as indicated for some reason");
 
   return 0;
 }
