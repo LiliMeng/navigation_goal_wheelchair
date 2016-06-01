@@ -102,10 +102,28 @@ int main(int argc, char** argv){
     {
         ROS_INFO("Hooray, the base moved [%G] meter forward", (double)goal.target_pose.pose.position.x);
     }
+    else if(goal.target_pose.pose.position.x==0)
+    {
+        ROS_INFO("The base does not move forward or backward");
+    }
     else
     {
         ROS_INFO("Hooray, the base moved [%G] meter backward", (double)goal.target_pose.pose.position.x);
     }
+
+    if(goal.target_pose.pose.position.y>0)
+    {
+        ROS_INFO("Hooray, the base moved [%G] meter right", (double)goal.target_pose.pose.position.y);
+    }
+    else if(goal.target_pose.pose.position.y==0)
+    {
+        ROS_INFO("The base does not move left or right");
+    }
+    else
+    {
+        ROS_INFO("Hooray, the base moved [%G] meter left", (double)goal.target_pose.pose.position.y);
+    }
+
   }
   else
     ROS_INFO("The base failed to move as indicated for some reason");
